@@ -10,11 +10,19 @@ public class Episodio {
     private Double avaliacao;
     private LocalDate dataLancamento;
     private String atores;
+    private String genero;
+    private String poster;
+    private String sinopse;
+
     public Episodio(Integer numeroTemporada, DadosEpisodio dadosEpisodio , DadosSerie dadosSerie) {
         this.temporada = numeroTemporada;
         this.titulo = dadosEpisodio.titulo();
         this.numeroEpisodio = dadosEpisodio.numero();
         this.atores = dadosSerie.atores();
+        this.genero = dadosSerie.genero();
+        this.poster = dadosSerie.poster();
+        this.sinopse = dadosSerie.sinopse();
+
         try {
             this.avaliacao = Double.valueOf(dadosEpisodio.avaliacao());
         } catch (NumberFormatException ex) {
@@ -67,6 +75,37 @@ public class Episodio {
     public void setDataLancamento(LocalDate dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getSinopse() {
+        return sinopse;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+
+    public String getAtores() {
+        return atores;
+    }
+
+    public void setAtores(String atores) {
+        this.atores = atores;
+    }
 
     @Override
     public String toString() {
@@ -77,11 +116,5 @@ public class Episodio {
                 ", dataLancamento=" + dataLancamento ;
     }
 
-    public String getAtores() {
-        return atores;
-    }
 
-    public void setAtores(String atores) {
-        this.atores = atores;
-    }
 }
