@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
-//ISSO E UM METODO CONSTRUTOR esse arquivo todo
+//ISSO E UM METODO CONSTRUTOR esse arquivo
 public class Serie {
     private String titulo;
     private Integer totalTemporadas;
