@@ -22,29 +22,32 @@ public class Principal {
     private final String API_KEY = "&apikey=6585022c";
 
     public void exibeMenu() {
-        var menu = """
-                1 - Buscar séries
-                2 - Buscar episódios
-                
-                0 - Sair                                 
-                """;
+        var opcao = -1;
+        while (opcao != 0) {
+            var menu = """
+                    1 - Buscar séries
+                    2 - Buscar episódios
+                    
+                    0 - Sair                                 
+                    """;
 
-        System.out.println(menu);
-        var opcao = leitura.nextInt();
-        leitura.nextLine();
+            System.out.println(menu);
+            opcao = leitura.nextInt();
+            leitura.nextLine();
 
-        switch (opcao) {
-            case 1:
-                buscarSerieWeb();
-                break;
-            case 2:
-                buscarEpisodioPorSerie();
-                break;
-            case 0:
-                System.out.println("Saindo...");
-                break;
-            default:
-                System.out.println("Opção inválida");
+            switch (opcao) {
+                case 1:
+                    buscarSerieWeb();
+                    break;
+                case 2:
+                    buscarEpisodioPorSerie();
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+            }
         }
     }
 
