@@ -9,12 +9,12 @@ public class Episodio {
     private Integer numeroEpisodio;
     private Double avaliacao;
     private LocalDate dataLancamento;
-
-    public Episodio(Integer numeroTemporada, DadosEpisodio dadosEpisodio) {
+    private String atores;
+    public Episodio(Integer numeroTemporada, DadosEpisodio dadosEpisodio , DadosSerie dadosSerie) {
         this.temporada = numeroTemporada;
         this.titulo = dadosEpisodio.titulo();
         this.numeroEpisodio = dadosEpisodio.numero();
-
+        this.atores = dadosSerie.atores();
         try {
             this.avaliacao = Double.valueOf(dadosEpisodio.avaliacao());
         } catch (NumberFormatException ex) {
@@ -75,5 +75,13 @@ public class Episodio {
                 ", numeroEpisodio=" + numeroEpisodio +
                 ", avaliacao=" + avaliacao +
                 ", dataLancamento=" + dataLancamento ;
+    }
+
+    public String getAtores() {
+        return atores;
+    }
+
+    public void setAtores(String atores) {
+        this.atores = atores;
     }
 }
