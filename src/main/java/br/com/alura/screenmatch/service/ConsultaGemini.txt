@@ -7,7 +7,7 @@
 //    public static String obterTraducao(String texto) {
 //        // Configura o serviço do Gemini
 //        ChatLanguageModel model = GoogleAiGeminiChatModel.builder()
-//                .apiKey("AQ.Ab8RN6IDLmPOKq1N3ol-eptxvyFbQBa3qt9vNeTl9RALLhlmdw")
+//                .apiKey("")
 //                .modelName("gemini-1.5-flash") // Modelo rápido e eficiente do Gemini
 //                .temperature(0.60)
 //                .build();
