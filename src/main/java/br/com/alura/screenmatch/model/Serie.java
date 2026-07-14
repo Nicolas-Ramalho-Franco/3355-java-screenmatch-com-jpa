@@ -2,6 +2,8 @@ package br.com.alura.screenmatch.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
 //ISSO E UM METODO CONSTRUTOR esse arquivo
@@ -25,6 +27,11 @@ public class Serie {
     private String poster;
     private String sinopse;
 
+    @Transient // isso estou falando para o jpa deixar isso quieto e n colocar no banco
+    private List<Episodio> episodios = new ArrayList<>();
+
+    public Serie() {}
+
     public Serie(DadosSerie dadosSerie) {
         this.titulo = dadosSerie.titulo();
         this.totalTemporadas = dadosSerie.totalTemporadas();
@@ -34,6 +41,14 @@ public class Serie {
         this.sinopse = dadosSerie.sinopse();
         this.atores = dadosSerie.atores();
 
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
     }
 
     public long getId() {
