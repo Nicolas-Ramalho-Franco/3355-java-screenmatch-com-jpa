@@ -1,14 +1,27 @@
 package br.com.alura.screenmatch.model;
 
+import jakarta.persistence.*;
+
 import java.util.OptionalDouble;
 
 //ISSO E UM METODO CONSTRUTOR esse arquivo
+@Entity
+@Table(name = "series")//  ISSO VAI SER UMA TABELA NO BANCO COM O NOME SERIES
 public class Serie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AQUI ESTOU PASSANDO COMO VAI SER A ESTRATEGIA DE CRIAR O ID DO BANCO
+    private long id;
+
+    @Column(unique = true) // ISSO MOSTRA QUE O TITULO NUNCA VAI CE REPETIR
     private String titulo;
+
     private Integer totalTemporadas;
     private Double avaliacao;
     private String atores;
+
+    @Enumerated(EnumType.STRING)//Estou falando que essa enum vai ser um string (Drama, romance , etc)
     private Categoria genero; // AQUI CRIEI UM ENUM COM AS CATEGORIAS QUE EU QUERO
+
     private String poster;
     private String sinopse;
 
@@ -21,6 +34,14 @@ public class Serie {
         this.sinopse = dadosSerie.sinopse();
         this.atores = dadosSerie.atores();
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
