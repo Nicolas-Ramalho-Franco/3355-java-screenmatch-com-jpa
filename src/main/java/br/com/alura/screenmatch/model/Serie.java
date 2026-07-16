@@ -27,7 +27,8 @@ public class Serie {
     private String poster;
     private String sinopse;
 
-    @Transient // isso estou falando para o jpa deixar isso quieto e n colocar no banco
+    //@Transient -> isso estou falando para o jpa deixar isso quieto e n colocar no banco
+    @OneToMany(mappedBy = "serie") // isso estou falando que 1 serie pode ter muitos episodios e na classe episodios tem um @OneToOne
     private List<Episodio> episodios = new ArrayList<>();
 
     public Serie() {}
