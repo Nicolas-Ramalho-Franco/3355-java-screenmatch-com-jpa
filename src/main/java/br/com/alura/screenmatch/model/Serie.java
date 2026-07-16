@@ -28,7 +28,7 @@ public class Serie {
     private String sinopse;
 
     //@Transient -> isso estou falando para o jpa deixar isso quieto e n colocar no banco
-    @OneToMany(mappedBy = "serie") // isso estou falando que 1 serie pode ter muitos episodios e na classe episodios tem um @OneToOne
+    @OneToMany(mappedBy = "serie" , cascade = CascadeType.ALL , fetch = FetchType.EAGER) // isso estou falando que 1 serie pode ter muitos episodios e na classe episodios tem um @OneToOne
     private List<Episodio> episodios = new ArrayList<>();
 
     public Serie() {}
@@ -41,14 +41,14 @@ public class Serie {
         this.poster = dadosSerie.poster();
         this.sinopse = dadosSerie.sinopse();
         this.atores = dadosSerie.atores();
-
     }
 
     public List<Episodio> getEpisodios() {
         return episodios;
     }
 
-    public void setEpisodios(List<Episodio> episodios) {
+    public void setEpisodios(List<Episodio> episodios ) {
+        episodios.forEach(e ->e.setSerie(this)); // aqui eu manipulei a chave estrangeira para no episodio ela aparecer
         this.episodios = episodios;
     }
 
@@ -124,6 +124,7 @@ public class Serie {
                 ", avaliacao=" + avaliacao +
                 ", atores='" + atores + '\'' +
                 ", poster='" + poster + '\'' +
-                ", sinopse='" + sinopse + '\'' ;
+                ", sinopse='" + sinopse + '\''+
+                ", Episodios='" + episodios + '\'';
     }
 }
