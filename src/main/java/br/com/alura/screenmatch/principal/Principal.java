@@ -36,6 +36,7 @@ public class Principal {
                     2 - Buscar episódios
                     3- Listar Series buscadas
                     4- Buscar Serie por titulo
+                    5- Buscar Serie por Ator
                     
                     0 - Sair                                 
                     """;
@@ -56,6 +57,9 @@ public class Principal {
                     break;
                 case 4:
                     buscarSeriePorTitulo();
+                    break;
+                case 5:
+                    buscarSeriePorAtor();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -126,7 +130,7 @@ public class Principal {
 
     private void buscarSeriePorTitulo() {
         System.out.println("Escolha uma serie pelo o nome:");
-        var nomeSerie = leitura.nextLine();
+        var nomeSerie = leitura.next();
         Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie); // aqui estou colocando um buscar serie chamando o metodo que chamei non repositorio
 
         if (serieBuscada.isPresent()) {
@@ -134,7 +138,15 @@ public class Principal {
         }else {
             System.out.println("Serie não encontrada!");
         }
-
+    }
+    private void buscarSeriePorAtor() {
+        System.out.println("Escolha uma serie pelo o nome do ator:");
+        var nomeAtor = leitura.next();
+        System.out.println("Avaliações apartir de qual valor :");
+        var avaliacao = leitura.nextDouble();
+        List<Serie> seriesEncontrada = repositorio.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor , avaliacao);
+        System.out.println("Series em que o :"+nomeAtor+" Trabalhou" );
+        seriesEncontrada.forEach(s-> System.out.println(s.getTitulo() + "avaliação : " + s.getAvaliacao()));
     }
 
 }
