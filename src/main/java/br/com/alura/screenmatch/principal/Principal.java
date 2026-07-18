@@ -35,6 +35,7 @@ public class Principal {
                     1 - Buscar séries
                     2 - Buscar episódios
                     3- Listar Series buscadas
+                    4- Buscar Serie por titulo
                     
                     0 - Sair                                 
                     """;
@@ -52,6 +53,9 @@ public class Principal {
                     break;
                 case 3:
                     listarSeriesBuscadas();
+                    break;
+                case 4:
+                    buscarSeriePorTitulo();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -84,9 +88,7 @@ public class Principal {
         var nomeSerie = leitura.nextLine();
 
         // 1. Guardamos o resultado em 'serieBuscada'
-        Optional<Serie> serieBuscada = series.stream()
-                .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
-                .findFirst();
+        Optional<Serie> serieBuscada =  repositorio.findByTituloContainingIgnoreCase(nomeSerie);
 
         // 2. Verificamos o Optional, e não a lista
         if (serieBuscada.isPresent()) {
@@ -121,4 +123,18 @@ public class Principal {
                 .forEach(System.out::println);
 
     }
+
+    private void buscarSeriePorTitulo() {
+        System.out.println("Escolha uma serie pelo o nome:");
+        var nomeSerie = leitura.nextLine();
+        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie); // aqui estou colocando um buscar serie chamando o metodo que chamei non repositorio
+
+        if (serieBuscada.isPresent()) {
+            System.out.println("Dados da serie : " + serieBuscada.get());
+        }else {
+            System.out.println("Serie não encontrada!");
+        }
+
+    }
+
 }
