@@ -16,7 +16,7 @@ public class Principal {
     private final String ENDERECO = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=6585022c";
     private List<DadosSerie> dadosSeries = new ArrayList<>();
-    
+
     private List<Serie> series = new ArrayList<>();
 
     private SerieRepository repositorio;
@@ -36,7 +36,7 @@ public class Principal {
                     5- Buscar Serie por Ator
                     6 - Top 5 Series
                     7 - Buscar por Genero
-                    9 - Filtrar séries
+                    8 - Filtrar séries
                     
                     0 - Sair                                 
                     """;
@@ -179,10 +179,9 @@ public class Principal {
         System.out.println("Qual avalição essa serie precisa ter? :");
         var avaliacoesDesejadas = leitura.nextDouble();
 
-        List<Serie> filtroSerie = repositorio.findByTotalTemporadasLessthanEqualsAndLiacaoGreaterThanEqual(temporadasDesejadas, avaliacoesDesejadas);
+        List<Serie> filtroSerie = repositorio.seriesPorTemporadaEAValiacao(temporadasDesejadas, avaliacoesDesejadas);
         System.out.println("*** Series filtradas ***");
         filtroSerie.forEach(s -> System.out.println(s.getTitulo() + " - avaliacao : " + s.getAvaliacao()));
-
 
     }
 }
