@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SerieRepository extends JpaRepository<Serie, Long> {
-    Optional<Serie> findByTituloContainingIgnoreCase(String titulo); // buscando por titulo iguinorando Maiusculo
+    Optional<Serie> findFirstByTituloContainingIgnoreCase(String nomeSerie); // buscando por titulo iguinorando Maiusculo
 
     List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String nomeAtor , double avaliacao);// Buscando por ator e tendo como parametro usando as avaliações
 
@@ -23,4 +23,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     @Query("SELECT e  FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:trechoEpisodio%")
     List<Episodio> episodiosPorTrecho(String trechoEpisodio);
+
+    @Query("SELECT e  FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.avaliacao DESC  LIMIT 5")
+    List<Episodio> topEpisodiosPorSerie(Serie serie);
 }

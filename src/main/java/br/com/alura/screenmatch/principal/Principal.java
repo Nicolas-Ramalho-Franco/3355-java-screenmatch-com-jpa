@@ -16,6 +16,7 @@ public class Principal {
     private final String ENDERECO = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=6585022c";
     private List<DadosSerie> dadosSeries = new ArrayList<>();
+    private Optional<Serie> serieBusca;
 
     private List<Serie> series = new ArrayList<>();
 
@@ -38,6 +39,7 @@ public class Principal {
                     7 - Buscar por Genero
                     8 - Filtrar séries
                     9 - Buscar por trecho
+                    10 - Buscar top 5
                     
                     0 - Sair                                 
                     """;
@@ -74,6 +76,9 @@ public class Principal {
                 case 9 :
                     buscarEpisodioPorTrecho();
                     break;
+                case 10 :
+                    topEpisodiosPorSerie();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -105,7 +110,7 @@ public class Principal {
         var nomeSerie = leitura.nextLine();
 
         // 1. Guardamos o resultado em 'serieBuscada'
-        Optional<Serie> serieBuscada =  repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+        Optional<Serie> serieBuscada =  repositorio.findFirstByTituloContainingIgnoreCase(nomeSerie);
 
         // 2. Verificamos o Optional, e não a lista
         if (serieBuscada.isPresent()) {
@@ -143,15 +148,16 @@ public class Principal {
 
     private void buscarSeriePorTitulo() {
         System.out.println("Escolha uma serie pelo o nome:");
-        var nomeSerie = leitura.next();
-        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie); // aqui estou colocando um buscar serie chamando o metodo que chamei non repositorio
+        var nomeSerie = leitura.nextLine();
+        serieBusca = repositorio.findFirstByTituloContainingIgnoreCase(nomeSerie); // aqui estou colocando um buscar serie chamando o metodo que chamei non repositorio
 
-        if (serieBuscada.isPresent()) {
-            System.out.println("Dados da serie : " + serieBuscada.get());
+        if (serieBusca.isPresent()) {
+            System.out.println("Dados da serie : " + serieBusca.get());
         }else {
             System.out.println("Serie não encontrada!");
         }
     }
+
     private void buscarSeriePorAtor() {
         System.out.println("Escolha uma serie pelo o nome do ator:");
         var nomeAtor = leitura.next();
@@ -188,10 +194,23 @@ public class Principal {
         filtroSerie.forEach(s -> System.out.println(s.getTitulo() + " - avaliacao : " + s.getAvaliacao()));
 
     }
+
     private void buscarEpisodioPorTrecho(){
         System.out.println("Qual o trecho deseja buscar?");
         var trechoEpisodio = leitura.nextLine();
         List<Episodio> episodiosEncontrados = repositorio.episodiosPorTrecho(trechoEpisodio);
         episodiosEncontrados.forEach(e -> System.out.println("Serie :"+e.getSerie()+" - "+e.getTitulo() + " - Temporadas : " + e.getTemporada()));
+    }
+
+    private void topEpisodiosPorSerie(){
+        buscarSeriePorTitulo();
+
+        if(serieBusca.isPresent()) {
+            Serie serie = serieBusca.get();
+            List<Episodio> topEpisodios = repositorio.topEpisodiosPorSerie(serie);
+            topEpisodios.forEach(e -> System.out.println("Serie :"+e.getSerie()+" - "+e.getTitulo() + " - Temporadas : " + e.getTemporada()));
+
+        }
+
     }
 }
