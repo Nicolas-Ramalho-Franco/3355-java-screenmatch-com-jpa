@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch.service;
 
+import br.com.alura.screenmatch.dto.EpisodioDTO;
 import br.com.alura.screenmatch.dto.SerieDTO;
 import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.repositoty.SerieRepository;
@@ -26,7 +27,25 @@ public class SerieService {
     }
 
     public List<SerieDTO> obterLancamentos() {
-        return converteDados(repository.findTop5ByOrderByEpisodiosDataLancamentoDesc());
+        return converteDados(repository.lancamentosMaisRecentes());
+    }
+
+    public List<EpisodioDTO> obterTemporadasPorNumero(long id, long numero) {
+        return repository.obterEpisodiosPortemporada(id, numero)
+                .stream()
+                .map(episodio -> new EpisodioDTO(episodio.getTemporada(), episodio.getNumeroEpisodio(), episodio.getTitulo()))
+                .collect(Collectors.toList());
+    }
+
+    public List<EpisodioDTO> obterTodasAsTemporadas(long id) {
+        Optional<Serie> serie = repository.findById(id);
+        if  (serie.isPresent()) {
+            Serie s = serie.get();
+            return s.getEpisodios().stream()
+                    .map(episodio -> new EpisodioDTO(episodio.getTemporada(), episodio.getNumeroEpisodio(), episodio.getTitulo()))
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 
     public SerieDTO obterProId(long id) {// quando ele precisa de uma variavel tem que ser no optional
@@ -50,5 +69,6 @@ public class SerieService {
                 .collect(Collectors.toList());// aqui estou colocando essa coleta em uma lista
     }
 
-    
+
+
 }
